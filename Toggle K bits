@@ -1,0 +1,74 @@
+Problem statement
+You are given a 32-bit integer ‘N’. Your task is to toggle the rightmost ‘K’ bits in the given integer and return the new integer.
+
+For Example :
+If ‘N’ = 12 and ‘K’ = 2:
+The binary representation of 12 is ‘1100’, after toggling rightmost 2 bits, it becomes ‘1111’ i.e. 15. Hence, the answer is 15. 
+
+Constraints:
+1 <= T <= 10
+1 <= N <= 10^9
+1 <= K <= 31
+
+SOLUTION:
+
+#include <bits/stdc++.h> 
+
+void reverse(vector<int> &ans){
+    int i = 0;
+    int j = ans.size()-1;
+    while(i<j){
+        swap(ans[i], ans[j]);
+        i++;
+        j--;
+    }
+}
+
+//function to convert decimal value to binary array
+vector<int> decToBin(int n){
+    vector<int> ans;
+    while(n>0){
+        ans.push_back(n%2);
+        n /= 2;
+    }
+    //making array 32 size by appending 0's
+    int i = ans.size();
+    while(i < 32){
+        ans.push_back(0);
+        i++;
+    }
+
+    //reversing array 
+    reverse(ans);
+    return ans;
+    
+}
+
+int toggleKBits(int n, int k) {
+    //storing binary bits into ans vector
+    vector<int> ans = decToBin(n);
+
+    //toggle rightmost k bits
+    int index = ans.size()-1;
+    int counter = 0;
+    while(counter < k){
+        if(ans[index] == 0){
+            ans[index] = 1;
+        }else{
+            ans[index] = 0;
+        }
+
+        index--;
+        counter++;
+        
+    }
+
+    //converting binary array to decimal value 
+    int result = 0;
+    int count = 0;
+    for(int i = ans.size()-1;i>=0;i--){
+        result += (ans[count]*pow(2,i));
+        count++;
+    }
+    return result;
+}
