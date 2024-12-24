@@ -1,0 +1,177 @@
+GFG
+
+Search in a sorted Matrix
+
+Difficulty: Medium
+Accuracy: 56.27%
+Submissions: 117K+
+Points: 4
+
+Given a strictly sorted 2D matrix mat[][] of size n x m and a number x. Find whether the number x is present in the matrix or not.
+Note: In a strictly sorted matrix, each row is sorted in strictly increasing order, and the first element of the ith row (i!=0) is greater than the last element of the (i-1)th row.
+
+Examples:
+
+Input: mat[][] = [[1, 5, 9], [14, 20, 21], [30, 34, 43]], x = 14
+Output: true
+Explanation: 14 is present in the matrix, so output is true.
+Input: mat[][] = [[1, 5, 9, 11], [14, 20, 21, 26], [30, 34, 43, 50]], x = 42
+Output: false
+Explanation: 42 is not present in the matrix.
+Input: mat[][] = [[87, 96, 99], [101, 103, 111]], x = 101
+Output: true
+Explanation: 101 is present in the matrix.
+
+Constraints:
+1 <= n, m <= 1000
+1 <= mat[i][j] <= 109
+1 <= x <= 109
+
+Solution:-
+
+[Naive Approach] Comparing with all elements – O(n*m) Time and O(1) Space
+In this approach, we will iterate through the entire matrix mat[][] and compare each element with x. If an element matches the x, we will return true. Otherwise, at the end of the traversal, we will return false. Please refer to Searching Algorithms for 2D Arrays (Matrix) to know more about the implementation.
+
+[Better Approach] Using Binary Search Twice - O(logn + logm) Time and O(1) Space
+First, we locate the row where the target x might be by using binary search, and then we apply binary search again within that row.
+
+To find the correct row, we perform binary search on the first elements of the middle row.
+Start with low = 0 and high = n - 1.
+
+If x is smaller than the first element of the middle row (a[mid][0]), then x will be smaller than all elements in rows >= mid, so update high = mid - 1.
+If x is greater than the first element of the middle row (a[mid][0]), then x will be greater than all elements in rows < mid, so store the current mid row and update low = mid + 1.
+Once we have found the correct row, we can apply binary search within that row to search for the target element x.
+
+
+// C++ program to search in the sorted matrix using
+// Binary Search two times
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Function to binary search for x in arr[]
+bool search(vector<int> &arr, int x) {
+    int lo = 0, hi = arr.size() - 1;
+
+    while (lo <= hi) {
+        int mid = (lo + hi) / 2;
+
+        if (x == arr[mid])
+            return true;
+        if (x < arr[mid])
+            hi = mid - 1;
+        else
+            lo = mid + 1;
+    }
+    return false;
+}
+
+bool searchMatrix(vector<vector<int>> &mat, int x) {
+    int n = mat.size(), m = mat[0].size();
+    int lo = 0, hi = n - 1;
+    int row = -1;
+
+    while (lo <= hi) {
+        int mid = (lo + hi) / 2;
+
+        // If the first element of mid row is equal to x,
+        // return true
+        if (x == mat[mid][0])
+            return true;
+      
+        // If x is greater than first element of mid row,
+        // store the mid row and search in lower half
+        if (x > mat[mid][0]) {
+            row = mid;
+            lo = mid + 1;
+        }
+      
+        // If x is smaller than first element of mid row,
+        // search in upper half
+        else
+            hi = mid - 1;
+    }
+   
+    // If x is smaller than all elements of mat[][]
+    if (row == -1)
+        return false;
+
+    return search(mat[row], x);
+}
+
+int main() {
+    vector<vector<int>> mat = {{1, 5, 9}, {14, 20, 21}, {30, 34, 43}};
+    int x = 14;
+
+    if (searchMatrix(mat, x))
+        cout << "true";
+    else
+        cout << "false";
+
+    return 0;
+}
+
+Output
+true
+
+[Expected Approach] Using Binary Search Once - O(log(n*m)) and O(1) Space
+The idea is to consider the given matrix as 1D array and apply only one binary search. For example, for a matrix of size n x m and we can consider it as a 1D array of size n*m, then the first index would be 0 and last index would n*m-1. So, we need to do binary search from low = 0 to high = (n*m-1).
+
+How to find the element in 2D matrix corresponding to index = mid?
+
+Since each row of mat[][] will have m elements, so we can find the row of the element as (mid / m) and the column of the element as (mid % m). Then, we can compare x with arr[mid/m][mid%m] for each mid and complete our binary search.
+
+Search-element-in-a-sorted-matrix-Using-Binary-Search-1.webpSearch-element-in-a-sorted-matrix-Using-Binary-Search-1.webp
+
+
+
+// C++ program to search in the sorted matrix using
+// binary search
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool searchMatrix(vector<vector<int>>& mat, int x) {
+    int n = mat.size(), m = mat[0].size();
+
+    int lo = 0, hi = n * m - 1;
+    while (lo <= hi) {
+        int mid = (lo + hi) / 2;
+      
+        // Find row and column of element at mid index
+        int row = mid / m;
+        int col = mid % m;
+      
+        // If x is found, return true
+        if (mat[row][col] == x) 
+            return true;
+      
+        // If x is greater than mat[row][col], search in
+        // right half
+        if (mat[row][col] < x) 
+            lo = mid + 1;
+        
+        // If x is less than mat[row][col], search in 
+        // left half
+        else 
+            hi = mid - 1;
+    }
+    return false;
+}
+
+int main() {
+    vector<vector<int>> mat = {{1, 5, 9}, {14, 20, 21}, {30, 34, 43}};
+    int x = 14;
+
+    if (searchMatrix(mat, x))
+        cout << "true";
+    else
+        cout << "false";
+
+    return 0;
+}
+
+Output
+true
