@@ -1,0 +1,73 @@
+Code 360
+
+Linked List Cycle II
+Moderate
+80/80
+Average time to solve is 10m
+
+Problem statement
+You are given a singly linked list that may or may not contain a cycle. You are supposed to return the node where the cycle begins, if a cycle exists, else return 'NULL'.
+A cycle occurs when a node's next pointer returns to a previous node in the list.
+
+Sample Input 1 :
+1 2 3 4 -1
+1
+
+
+Sample Output 1 :
+1
+
+Sample Input 2 :
+1 2 3 4 -1
+0
+
+
+Sample Output 2 :
+0
+
+Constraints :
+-10^4 <= n <= 10^4
+-1 <= pos < n
+-10^9 <= data <= 10^9 and data != -1
+
+Time Limit: 1 sec
+
+cpp code:-
+
+Node* detectCycle(Node* head) {
+    // Edge case: empty list or single node
+    if (head == NULL || head->next == NULL) {
+        return NULL;
+    }
+
+    Node* slow = head;
+    Node* fast = head;
+
+    // Step 1: Detect if a cycle exists
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        // Cycle detected
+        if (slow == fast) {
+            break;
+        }
+    }
+
+    // No cycle
+    if (fast == NULL || fast->next == NULL) {
+        return NULL;
+    }
+
+    // Step 2: Find the start of the cycle
+    slow = head;
+    while (slow != fast) {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    // `slow` and `fast` now point to the start of the cycle
+    return slow;
+}
+
+
