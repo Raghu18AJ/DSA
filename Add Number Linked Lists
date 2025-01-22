@@ -1,0 +1,137 @@
+GFG
+
+Add Number Linked Lists
+
+Difficulty: Medium
+Accuracy: 34.52%
+Submissions: 314K+
+Points: 4
+
+Given the head of two singly linked lists num1 and num2 representing two non-negative integers. The task is to return the head of the linked list representing the sum of these two numbers.
+
+For example, num1 represented by the linked list : 1 -> 9 -> 0, similarly num2 represented by the linked list: 2 -> 5. Sum of these two numbers is represented by 2 -> 1 -> 5.
+
+Note: There can be leading zeros in the input lists, but there should not be any leading zeros in the output list.
+
+Examples:
+
+Input: num1 = 4 - > 5, num2 = 3 -> 4 -> 5
+Output:  3 -> 9 -> 0
+ 
+Explanation: Given numbers are 45 and 345. There sum is 390.
+
+Input: num1 = 0 -> 0 -> 6 -> 3, num2 = 0 -> 7 
+Output: 7 -> 0 
+ 
+Explanation: Given numbers are 63 and 7. There sum is 70.
+
+Constraints:
+1 <= size of both linked lists <= 106
+0 <= elements of both linked lists <= 9
+
+CPP CODE
+
+class Solution {
+  public:
+  
+    //function to reverse a vector
+    void reverse(vector<int> &arr){
+        int i = 0;
+        int j = arr.size()-1;
+        while(i<j){
+            swap(arr[i],arr[j]);
+            i++;
+            j--;
+        }
+    }
+    
+    Node* addTwoLists(Node* num1, Node* num2) {
+        // code here
+        //vector to store elements of num1
+        vector<int> first;
+        Node* temp1 = num1;
+        while(temp1->data == 0){   //removing zeros from beginning
+            temp1 = temp1->next;
+        }
+        while(temp1 != NULL){
+            first.push_back(temp1->data);
+            temp1 = temp1 -> next;
+        }
+        
+        //vector to store elements of num2
+        vector<int> second;
+        Node* temp2 = num2;
+        while(temp2->data == 0){   //removing zeros from beginning
+            temp2 = temp2->next;
+        }
+        while(temp2 != NULL){
+            second.push_back(temp2->data);
+            temp2 = temp2 -> next;
+        }
+        
+        //revering both vectors to add from beginning
+        reverse(first);
+        reverse(second);
+        // for(int i = 0;i<first.size();i++){
+        //     cout<<first[i]<<" ";
+        // }cout<<endl;
+        // for(int i = 0;i<second.size();i++){
+        //     cout<<second[i]<<" ";
+        // }cout<<endl;
+        
+        
+        //now adding the elements of both the vectors by sum and carry logic 
+        //and storing the result in final vector
+        int carry = 0;
+        int i = 0;
+        vector<int> final;
+        
+        while(i<first.size() && i<second.size()){
+            int sum = first[i]+second[i]+carry;
+            final.push_back(sum%10);
+            carry = sum/10;
+            i++;
+        }
+        
+        while(i<first.size()){
+            int sum = first[i] + carry;
+            final.push_back(sum%10);
+            carry = sum/10;
+            i++;
+        }
+        
+        while(i<second.size()){
+            int sum = second[i] + carry;
+            final.push_back(sum%10);
+            carry = sum/10;
+            i++;
+        }
+        
+        if(carry>0){
+            final.push_back(carry);
+        }
+        
+        //revering the final vector bcoz we the storing result by adding from backward
+        //actual ans would be reverse vector
+        reverse(final);
+        
+        // for(int i = 0;i<final.size();i++){
+        //     cout<<final[i]<<" ";
+            
+        // }cout<<endl;
+        
+        //converting a vector array to linkedlist
+        Node* ans = new Node(-1);
+        Node* curr = ans;
+        for(int i = 0;i<final.size();i++){
+            curr->next = new Node(final[i]);
+            curr = curr->next;
+        }
+        
+        
+        return ans->next;
+        
+        
+        
+    }
+};
