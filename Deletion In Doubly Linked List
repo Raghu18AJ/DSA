@@ -1,0 +1,96 @@
+Deletion In Doubly Linked List
+Easy
+40/40
+Average time to solve is 15m
+
+Problem statement
+You are given a Doubly Linked List of ‘N’ positive integers. Your task is to delete a node at position ‘POS’ in the linked list.
+
+Note:
+Assume that the Indexing for the linked list starts from 0.
+EXAMPLE:
+Input: ‘N’ = 5, 'LIST' = [1, 1, 2, 3, 4, -1], ‘POS’ = 1.
+
+Output: 1 < - > 2 < - > 3 < - > 4 
+
+Here in the given list, we can see that the node at position 1 is deleted.
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints :
+1 <= ‘T’ <= 10 
+2 <= ‘N’ <= 10^4 
+0 <= ‘POS < N  
+1 <= ‘data’ <= 10^7
+Where 'N' is the size of the doubly linked list, and ‘data’ is the Integer data of the doubly linked list.
+
+Time Limit: 1 sec
+Sample Input 1 :
+2
+1 1 2 3 4 -1
+1
+1 2 -1
+1
+Sample Output 1 :
+1 2 3 4
+1 
+Explanation Of Sample Input 1 :
+For the first test case,
+‘N’ = 5, 'LIST' = [1, 1, 2, 3, 4, -1], ‘POS’ = 1.
+After deleting the node at position 1 the list will be:
+1 < - > 2 < - > 3 < - > 4.
+
+For the second test case,
+‘N’ = 2,  'LIST' = [1, 2, -1], ‘POS’ = 1.
+After deleting the node at position 1 the list will be:
+1.
+Sample Input 2 :
+2
+1 2 3 -1
+0
+3 4 4 -1
+2
+Sample Output 2 :
+2 3
+3 4
+
+cpp code:-
+#include <bits/stdc++.h> 
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+            int data;
+            Node *next;
+            Node *prev;
+            Node(int data)
+            {
+                this->data = data;
+                this->next = NULL;
+                this->prev = NULL;
+            }
+        };
+
+*****************************************************************/
+
+void deleteNode(Node * ( & head), int pos) {
+    if(pos == 0){
+        head = head->next;
+        head -> prev = NULL;
+    }else{
+        Node* prev = new Node(-1);
+        Node* curr = head;
+        int i = 0;
+        while(i<pos && curr != NULL){
+            prev = curr;
+            curr = curr->next;
+            i++;
+        }
+        Node* temp = curr->next;
+        curr->next = NULL;
+        curr->prev = NULL;
+        prev ->next = temp;
+    }
+    
+}
