@@ -1,0 +1,111 @@
+Program to validate IP address
+Easy
+40/40
+Average time to solve is 15m
+
+Problem statement
+You are given the text ‘IPAddress’. Your task is to check if the given text ‘IPAddress’ is a valid ‘IPv4’ or not.
+
+Conditions for a valid ‘IPv4’ are:
+
+1. Text form of ‘IPAddress’ must be ‘a.b.c.d’
+2. The values of a,b,c and d can vary from ‘0’ to ‘255’ and both ‘0’ and ‘255’ are inclusive.
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints:
+1 <= T <= 10^4
+1 <= length of given text <= 50
+
+Time limit: 1 sec
+Sample Input 1:
+4
+123.111.12.k
+122.0.330.0
+1.1.1.250
+1.0.0.0.1
+Sample Output 1:
+False
+False
+True
+False
+Explanation of sample input 1:
+Test Case 1:
+Given text ‘IPAddress = 123.111.12.k’, it is satisfying the first condition that given ‘IPAddress’ must be ‘a.b.c.d’ formed but it not satisfying the second condition that d must in a range of ‘0’ to ‘255’ but the value of ‘d’ is ‘k’.
+Hence return ‘False’.
+
+Test Case 2:
+Given text ‘IPAddress = 122.0.330.0’, it is satisfying the first condition that given ‘IPAddress’ must be ‘a.b.c.d’ formed but it not satisfying the second condition that c must in a range of ‘0’ to ‘255’ but the value of ‘c’ is ‘330’ and it is out of range.
+Hence return ‘False’.
+
+Test Case 3:
+Given text ‘IPAddress = 1.1.1.250’, it is satisfying the first condition that given ‘IPAddress’ must be ‘a.b.c.d’ formed as well as it satisfying the second condition that a,b,c, and d must in range of ‘0’ to ‘250’.
+Hence return ‘True’.
+
+Test Case 4:
+Given text ‘IPAddress = 1.0.0.0.1’, it is not satisfying the first condition for valid ‘IPv4’, that text ‘IPAddress’ must be in form of ‘a.b.c.d’ but given text is a form of ‘a.b.c.d.e’
+Hence return ‘False’.
+Sample Input 2:
+2
+1.90.21.1
+1.1
+Sample Output 2:
+True
+False
+
+cpp soln:-
+#include <bits/stdc++.h> 
+bool isValidIPv4(string ipAddress) {
+    // Write your code here.
+    if(ipAddress.length()>15){
+        return false;
+    }
+    int dot = 0;
+    for(int i = 0;i<ipAddress.length();i++){
+        if(!((ipAddress[i]>='0'&&ipAddress[i]<='9')||(ipAddress[i]=='.'))){
+            return false;
+        }
+        if(ipAddress[i] == '.'){
+            dot++;
+        }
+    }
+    if(dot != 3){
+        return false;
+    }
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    int i = 0;
+    while(i<ipAddress.length() && ipAddress[i]!='.'){
+        int digit = ipAddress[i]-'0';
+        a *= 10;
+        a += digit;
+        i++;
+    }
+    i++;
+    while(i<ipAddress.length() && ipAddress[i]!='.'){
+        int digit = ipAddress[i]-'0';
+        b *= 10;
+        b += digit;
+        i++;
+    }
+    i++;
+    while(i<ipAddress.length() && ipAddress[i]!='.'){
+        int digit = ipAddress[i]-'0';
+        c *= 10;
+        c += digit;
+        i++;
+    }
+    i++;
+    while(i<ipAddress.length() && ipAddress[i]!='.'){
+        int digit = ipAddress[i]-'0';
+        d *= 10;
+        d += digit;
+        i++;
+    }
+    if((a>=0&&a<=255)&&(b>=0&&b<=255)&&(c>=0&&c<=255)&&(d>=0&&d<=255)){
+        return true;
+    }
+    return false;
+
+
+}
