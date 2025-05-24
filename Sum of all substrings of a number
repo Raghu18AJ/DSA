@@ -1,0 +1,48 @@
+Sum of all substrings of a number
+Difficulty: MediumAccuracy: 38.11%Submissions: 60K+Points: 4
+Given an integer s represented as a string, the task is to get the sum of all possible sub-strings of this string.
+
+Note: The number may have leading zeros.
+It is guaranteed that the total sum will fit within a 32-bit signed integer.
+
+Examples:
+
+Input: s = "6759"
+Output: 8421
+Explanation:
+Sum = 6 + 7 + 5 + 9 + 67 + 75 + 59 + 675 + 759 + 6759 = 8421
+Input: s = "421"
+Output: 491
+Explanation: 
+Sum = 4 + 2 + 1 + 42 + 21 + 421 = 491
+Constraints:
+1 <= |s| <= 9
+
+CPP CODE:-
+
+class Solution {
+  public:
+    int strToNum(string s){
+        int ans = 0;
+        for(int i = 0;i<s.length();i++){
+            int digit = s[i]-'0';
+            ans *= 10;
+            ans += digit;
+        }
+        return ans;
+    }
+    int sumSubstrings(string &s) {
+        // code here
+        int sum = 0;
+        int i = 0;
+        while(i<s.length()){
+            string temp = "";
+            for(int j = i;j<s.length();j++){
+                temp.push_back(s[j]);
+                sum += strToNum(temp);
+            }
+            i++;
+        }
+        return sum;
+    }
+};
