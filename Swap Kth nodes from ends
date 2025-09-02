@@ -1,0 +1,75 @@
+Swap Kth nodes from ends
+
+Difficulty: Medium
+Accuracy: 35.5%
+Submissions: 68K+
+Points: 4
+Average Time: 45m
+
+Given the head of a singly linked list and an integer k. Swap the kth node (1-based index) from the beginning and the kth node from the end of the linked list. 
+Return the head of the final formed list and if it's not possible to swap the nodes return the original list.
+
+Examples:
+
+Input: k = 1,
+  
+Output: 5 -> 2 -> 3 -> 4 -> 1
+
+Explanation: Here k = 1, hence after swapping the 1st node from the beginning and end the new list will be 5 -> 2 -> 3 -> 4 -> 1.
+  
+Input: k = 2,
+  
+Output: 5 -> 9 -> 8 -> 5 -> 10 -> 3
+
+Explanation: Here k = 2, hence after swapping the 2nd node from the beginning and end the new list will be 5 -> 9 -> 8 -> 5 -> 10 -> 3.
+  
+Constraints:
+1 ≤ list size ≤ 104
+1 ≤ node->data ≤ 106
+1 ≤ k ≤ 104
+
+cpp code:
+/*
+class Node {
+  public:
+    int data;
+    Node *next;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    Node* swapKth(Node* head, int k) {
+        // code here
+        int n = 0;
+        Node* temp = head;
+        while(temp!=NULL){
+            n++;
+            temp = temp->next;
+        }
+        if(k>n||k<=0){
+            return head;
+        }
+        int index1 = k-1;
+        int index2 = n-k;
+        vector<int> arr;
+        while(head!=NULL){
+            arr.push_back(head->data);
+            head=head->next;
+        }
+        swap(arr[index1],arr[index2]);
+        Node* ans = new Node(-1);
+        Node* curr = ans;
+        for(int i = 0;i<n;i++){
+            curr->next = new Node(arr[i]);
+            curr = curr->next;
+        }
+        return ans->next;
+        
+    }
+};
