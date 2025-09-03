@@ -1,0 +1,74 @@
+Reverse a Doubly Linked List
+
+Difficulty: Easy
+Accuracy: 70.38%
+Submissions: 194K+
+Points: 2
+Average Time: 15m
+
+You are given the head of a doubly linked list. You have to reverse the doubly linked list and return its head.
+
+Examples:
+
+Input:
+   
+Output: 5 <-> 4 <-> 3
+
+Explanation: After reversing the given doubly linked list the new list will be 5 <-> 4 <-> 3.
+   
+Input: 
+   
+Output: 196 <-> 59 <-> 122 <-> 75
+
+Explanation: After reversing the given doubly linked list the new list will be 196 <-> 59 <-> 122 <-> 75.
+   
+Constraints:
+1 ≤ number of nodes ≤ 106
+0 ≤ node->data ≤ 104
+
+cpp code:
+
+/*
+class Node {
+  public:
+    int data;
+    Node *next;
+    Node *prev;
+    Node(int val) {
+        data = val;
+        next = NULL;
+        prev = NULL;
+    }
+};
+
+*/
+class Solution {
+  public:
+    Node *reverse(Node *head) {
+        // code here
+        vector<int> arr;
+        while(head!=NULL){
+            arr.push_back(head->data);
+            head=head->next;
+        }
+        int i = 0;
+        int j = arr.size()-1;
+        while(i<=j){
+            swap(arr[i],arr[j]);
+            i++;
+            j--;
+        }
+        Node* ans = new Node(-1);
+        Node* curr = ans;
+        Node* pre = NULL;
+        for(int i = 0;i<arr.size();i++){
+            curr->prev = pre;
+            curr->next = new Node(arr[i]);
+            pre = curr;
+            curr=curr->next;
+        }
+        curr->next= NULL;
+        return ans->next;
+        
+    }
+};
