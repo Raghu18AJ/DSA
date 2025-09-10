@@ -1,0 +1,78 @@
+Largest number in one swap
+
+Difficulty: Easy
+Accuracy: 32.65%
+Submissions: 5K+
+Points: 2
+
+Given a string s, return the lexicographically largest string that can be obtained by swapping at most one pair of characters in s.
+
+Examples:
+
+Input: s = "768"
+Output: "867"
+Explanation: Swapping the 1st and 3rd characters(7 and 8 respectively), gives the lexicographically largest string.
+
+Input: s = "333"
+Output: "333"
+Explanation: Performing any swaps gives the same result i.e "333".
+
+Constraints:
+1 ≤ |s| ≤ 105
+'0' ≤ s[i] ≤ '9'
+
+cpp code:
+class Solution {
+  public:
+    
+    string largestSwap(string &s) {
+        // code here
+        //convert string to vector
+        vector<int> arr;
+        for(int i = 0;i<s.length();i++){
+            int num = s[i]-'0';
+            arr.push_back(num);
+        }
+       
+        //copy arr to temp
+        vector<int> temp;
+        for(int i = 0;i<arr.size();i++){
+            temp.push_back(arr[i]);
+        }
+        
+        //sort temp
+        sort(temp.begin(),temp.end());
+        
+        //reverse temp
+        int i = 0;
+        int j = temp.size()-1;
+        while(i<=j){
+            swap(temp[i],temp[j]);
+            i++;
+            j--;
+        }
+        
+        //finding the ind of unmatched maximum element
+        int ind = 0;
+        while(arr[ind] == temp[ind]){
+            ind++;
+        }
+        
+        
+        if(ind<arr.size()){
+            int ind2 = arr.size()-1;
+            while(arr[ind2]!=temp[ind]){
+                ind2--;
+            }
+            swap(arr[ind],arr[ind2]);
+            string ans = "";
+            for(int i = 0;i<arr.size();i++){
+                char ch = '0'+arr[i];
+                ans.push_back(ch);
+            }
+            return ans;
+        }else{
+            return s;
+        }  
+    }
+};
