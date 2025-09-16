@@ -1,0 +1,75 @@
+NFACTOR
+
+Hard
+31/120
+Average time to solve is 50m
+
+Problem statement
+You have given ‘Q’ queries where each query is represented by three positive integers ‘A’, ‘B’ and ‘N’. For each query, you are supposed to find the number of integers in the range [A, B] which has exactly ‘N’ unique prime factors.
+
+Sample Input 1 :
+2
+3 8 2
+1 8 1
+Sample output 1 :
+1
+6
+Explanation of Sample output 1 :
+For the first test case, 6 is the only integer in the range [3, 8] which has exactly 2 unique prime factors, 2 and 3.
+
+For the second test case, [2, 3, 4, 5, 7, 8] will have exactly 1 unique prime factor.
+
+Sample Input 2 :
+2
+1 10 3
+1 2 1
+Sample output 2 :
+0
+1
+Explanation of Sample output 2 :
+For the first test case, there is no number in the range [1, 10] which has 3 unique prime factors.
+
+For the second test case, 2 has 1 unique prime factor.
+
+cpp code:
+
+#include <bits/stdc++.h> 
+bool isPrime(int num){
+	for(int i = 2;i<num;i++){
+		if(num%i==0){
+			return false;
+		}
+	}
+	return true;
+}
+bool isOk(int num, int target){
+	int count = 0;
+	for(int i = 2;i<=num;i++){
+		if(num%i==0&&isPrime(i)){
+			count++;
+		}
+	}
+	if(count==target){
+		return true;
+	}else{
+		return false;
+	}
+}
+vector<int> getNfactor(vector<vector<int>> &queries)
+{
+	//	Write your code here.
+	vector<int> ans;
+	for(int i = 0;i<queries.size();i++){
+		int A = queries[i][0];
+		int B = queries[i][1];
+		int N = queries[i][2];
+		int count = 0;
+		for(int j = A;j<=B;j++){
+			if(isOk(j,N)){
+				count++;
+			}
+		}
+		ans.push_back(count);
+	}
+	return ans;
+}
