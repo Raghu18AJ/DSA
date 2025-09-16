@@ -1,0 +1,66 @@
+One iteration
+
+Easy
+40/40
+Average time to solve is 10m
+
+Problem statement
+
+Alice loves to give challenging tasks to Bob. This time, Alice gave Bob an array ‘A’ of ‘N’ distinct integers and asked him to find the maximum sum Bob can make by taking two elements from this array. To make this challenging, Alice asked Bob to find the answer by traversing the array only once.
+
+As always, Bob asked you to help him do the task by traversing the array only once.
+
+Constraints:
+1 <= T <= 5
+2 <= N <= 10^5
+-10^9 <= A[i] <= 10^9 
+
+Time Limit: 1 sec
+
+Sample Input 1:
+2
+4 
+6 1 5 7
+2
+-1 9
+Sample Output 1:
+13
+8
+Explanation for Sample Input 1:
+In the first test case, Bob can select the 1st and 4th elements leading to a sum of 13.
+In the second test case, there are only two elements, so Bob has to select both of them, so the final sum is 8.
+
+Sample Input 2:
+2
+5 
+-9 2 3 10 9
+3 
+-12 4 -10
+Sample Output 2:
+19
+
+cpp code:
+
+#include <bits/stdc++.h> 
+int oneIteration(vector<int> A)
+{
+    // Write your code here. 
+    int first = A[0];
+    int second = A[1];
+    for(int i = 2;i<A.size();i++){
+        if(A[i]>first&&A[i]<second){
+            first = A[i];
+        }else if(A[i]<first&&A[i]>second){
+            second = A[i];
+        }else if(A[i]>first && A[i]>second){
+            if(first<=second){
+                first = A[i];
+            }else{
+                second = A[i];
+            }
+        }
+
+    }  
+    return first+second;
+}
+-6
