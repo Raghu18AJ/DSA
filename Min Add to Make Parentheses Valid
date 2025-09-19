@@ -1,0 +1,53 @@
+Min Add to Make Parentheses Valid
+
+Difficulty: Medium
+Accuracy: 77.93%
+Submissions: 4K+
+Points: 4
+
+You are given a string s consisting only of the characters '(' and ')'. Your task is to determine the minimum number of parentheses (either '(' or ')') that must be inserted at any positions to make the string s a valid parentheses string.
+
+A parentheses string is considered valid if:
+
+Every opening parenthesis '(' has a corresponding closing parenthesis ')'.
+Every closing parenthesis ')' has a corresponding opening parenthesis '('.
+Parentheses are properly nested.
+
+Examples:
+
+Input: s = "(()("
+Output: 2
+Explanation: There are two unmatched '(' at the end, so we need to add two ')' to make the string valid.
+Input: s = ")))"
+Output: 3
+Explanation: Three '(' need to be added at the start to make the string valid.
+Input: s = ")()()"
+Output: 1 
+Explanation: The very first ')' is unmatched, so we need to add one '(' at the beginning.
+
+Constraints:
+1 ≤ s.size() ≤ 105
+s[i] ∈ { '(' , ')' }
+
+cpp code:
+class Solution {
+  public:
+    int minParentheses(string& s) {
+        // code here
+        int open = 0;
+        int close = 0;
+        for(int i = 0;i<s.length();i++){
+            if(s[i] == '('){
+                open++;
+            }else{
+                if(open>0){
+                    open--;
+                }
+                else{
+                    close++;
+                }
+            }
+        }
+        return open+close;
+    }
+};
