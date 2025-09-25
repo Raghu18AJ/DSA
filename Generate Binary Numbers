@@ -1,0 +1,54 @@
+Generate Binary Numbers
+
+Difficulty: Easy
+Accuracy: 67.48%
+Submissions: 55K+
+Points: 2
+
+Given a number n. The task is to generate all binary numbers with decimal values from 1 to n.
+
+Examples:
+
+Input: n = 4
+Output: ["1", "10", "11", "100"]
+Explanation: Binary numbers from 1 to 4 are 1, 10, 11 and 100.
+Input: n = 6
+Output: ["1", "10", "11", "100", "101", "110"]
+Explanation: Binary numbers from 1 to 6 are 1, 10, 11, 100, 101 and 110.
+
+Constraints:
+1 ≤ n ≤ 106
+
+cpp code:
+
+class Solution {
+  public:
+    void reverse(string &temp){
+        int i = 0;
+        int j = temp.size()-1;
+        while(i<j){
+            swap(temp[i],temp[j]);
+            i++;
+            j--;
+        }
+    }
+    void solve(string &temp, int num){
+        while(num>0){
+            int bit = num%2;
+            char ch = '0'+ bit;
+            temp.push_back(ch);
+            num /= 2;
+        }
+        reverse(temp);
+    }
+    vector<string> generateBinary(int n) {
+        // code here
+        vector<string> ans;
+        for(int i = 1;i<=n;i++){
+            string temp = "";
+            solve(temp,i);
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};
