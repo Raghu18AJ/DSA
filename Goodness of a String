@@ -79,9 +79,6 @@ int goodnessOfString(string &s)
                 num.push_back(s[i]);
                 i++;
             }
-            if(s[i] == ','){
-                i++;
-            }
             int val = stoi(num);
             ans += val*depth;
         }
