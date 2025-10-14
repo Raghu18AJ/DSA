@@ -1,0 +1,111 @@
+Find nth elements of spiral matrix
+
+Easy
+40/40
+Average time to solve is 15m
+
+Problem statement
+
+Given a matrix with ‘N’ rows and ‘M’ columns and an integer ‘K’. Your task is to find the “Kth” element which is obtained while traversing the matrix in spiral form.
+
+Spiral Traversing in the matrix:
+
+The below picture can clearly show how to traverse a matrix in spiral form.
+
+
+Constraints:
+1 <= T <= 100
+1 <= N * M <= 5 * 10^3 
+1 <= K  <= N * M
+-10^9 <= mat[i][j] <= 10^9
+
+Time limit: 1 second
+
+Sample Input 1:
+2
+3 4 8
+1 2 3 4
+5 6 7 8
+7 9 2 1
+4 4 10
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+Sample Output 2:
+9
+13
+
+Explanation For sample input 1:
+
+Test Case 1:
+Given matrix is: 
+
+Spiral form traversal of given matrix is -  
+1=> 2=> 3=> 4=> 8=> 1=> 2=> 9=> 7 => 5=> 6 => 7
+
+Hence at the 8'th position element is ‘9’ in spiral form traversal of the given matrix so return the integer ‘9’.
+
+Test Case 2:
+Given matrix is 
+
+Spiral form traversal of given matrix is -  
+1=> 2=> 3=> 4=> 8=> 12=> 16=> 15=> 14=> 13=> 9=> 5=> 6=> 7=> 11=>10
+
+Hence at the 10'th position element is ‘13’ in spiral form traversal of the given matrix so return the integer ‘13’.
+
+Sample Input 2:
+2
+2 3 6
+2 3 1
+2 1 5
+4 2 7
+1 2 
+3 2
+8 3
+3 4
+Sample Output 2:
+2
+8
+
+cpp code:
+
+#include <bits/stdc++.h> 
+int findKthElement(vector<vector<int>> matrix, int k) {
+    // Write your code here.
+    int n = matrix.size();
+    int m = matrix[0].size();
+    int total = n*m;
+    int count = 0;
+    int stR = 0;
+    int stC = 0;
+    int endR = n-1;
+    int endC = m-1;
+    vector<int> temp;
+    while(count < total){
+        for(int i = stC;i<=endC&&count<total;i++){
+            temp.push_back(matrix[stR][i]);
+            count++;
+        }
+        stR++;
+
+        for(int i = stR;i<=endR&&count<total;i++){
+            temp.push_back(matrix[i][endC]);
+            count++;
+        }
+        endC--;
+
+        for(int i = endC;i>=stC&&count<total;i--){
+            temp.push_back(matrix[endR][i]);
+            count++;
+        }
+        endR--;
+
+        for(int i = endR;i>=stR&&count<total;i--){
+            temp.push_back(matrix[i][stC]);
+            count++;
+        }
+        stC++;
+    }
+    return temp[k-1];
+}
