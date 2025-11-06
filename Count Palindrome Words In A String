@@ -1,0 +1,77 @@
+Count Palindrome Words In A String
+Easy
+40/40
+Average time to solve is 15m
+Contributed by
+Asked in companies
+Problem statement
+You are given a string S of words. Your task is to find the number of palindrome words in the given string S. A word is called palindrome, if it reads the same backwards as forwards.
+
+Note:
+Words are separated by one or more whitespace characters.
+For Example:
+For the given string “Madam oyo cat”, “Madam”, and “oyo” are the palindrome words 
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints:
+1 <= T <= 10 
+0 <= |S| <= 10^5 
+
+All the characters of the string S contain whitespace, lowercase, and uppercase English letters only.
+
+Time limit: 1 second
+Sample Input 1:
+1
+Nitin and I are good friends
+Sample Output 1:
+2
+Explanation For Sample Input 1:
+For the first test case, there are 2 palindrome words only i.e “Nitin” and “I”.
+Sample Input 2:
+2
+Madam taught us the level order traversal of a binary tree yesterday
+We love coding ninjas
+Sample output 2:
+3
+0
+
+#include <bits/stdc++.h>
+bool palindrome(string s){
+	int i = 0;
+	int j = s.length()-1;
+	while(i<j){
+		if(s[i]>='A'&&s[i]<='Z'){
+			s[i] -= 'A';
+			s[i] += 'a';
+		}
+		if(s[j]>='A'&&s[j]<='Z'){
+			s[j] -= 'A';
+			s[j] += 'a';
+		}
+		if(s[i]!=s[j]){
+			return false;
+		}
+		i++;
+		j--;
+	}
+	return true;
+} 
+int countNumberOfPalindromeWords(string s)
+{
+	//Your code goes here
+	int ans = 0;
+	int i = 0;
+	while(i<s.length()){
+		string temp = "";
+		while(i<s.length()&&s[i]!=' '){
+			temp.push_back(s[i]);
+			i++;
+		}
+		if(palindrome(temp)){
+			ans++;
+		}
+		while(i<s.length()&&s[i]==' '){
+			i++;
+		}	
+	}
+	return ans;
+}
