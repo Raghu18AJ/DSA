@@ -1,0 +1,90 @@
+Reformat Date
+Easy
+40/40
+Average time to solve is 15m
+Asked in companies
+Problem statement
+You are given a string ‘S’ representing a date in the “Day Month Year” format, where:
+
+1. Day is represented as {"1st", "2nd", "3rd", "4th",”5th”, ...,”29th”, "30th", "31st"}.
+
+2. Month is represented as {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}.
+
+3. Year is represented as {2020,2021 etc}
+Your task is to convert the given date into “YYYY-MM-DD” format, where:
+1. YYYY is a 4 digit year.
+
+2. MM is a 2 digit month.
+
+3. DD is a 2 digit day.
+Note:
+
+1. The given dates are guaranteed to be valid.
+
+2. If you can’t represent a month in 2 digits then append  0 in front of the month. Eg: if the month is Jan, represent it as 01 and not as 1 in the answer.
+
+3. If you can’t represent a day in 2 digits then append 0 in front of the day. Eg: if the day is 5, represent it as 05 and not as 5 in the answer.
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints:
+1 <= T <= 10 ^ 4
+
+Day belongs in the set  {"1st", "2nd", "3rd", "4th",”5th”, ...,”29th”, "30th", "31st"}.
+Month belongs in the set {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}.
+1000 <= Year <= 2021 
+
+
+Time Limit: 1 second.
+Sample Input 1:
+1
+27th Apr 1998
+Sample Output 1:
+1998-04-27
+Explanation for sample input 1:
+“27th Apr 1998” will be converted to “1998-04-27” in “YYYY-MM-DD” format.
+
+
+cpp code:
+
+#include <bits/stdc++.h> 
+string reformDate(string& s) 
+{
+	// Write your code here
+	string ans = "";
+	int n = s.length();
+	for(int i = n-4;i<n;i++){
+		ans.push_back(s[i]);
+	}
+	ans.push_back('-');
+	vector<string> month = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+	string temp = "";
+	for(int i = n-8;i<n-5;i++){
+		temp.push_back(s[i]);
+	}
+	for(int i = 0;i<12;i++){
+		if(month[i]==temp){
+			int num = i+1;
+			if(num>=1&&num<=9){
+				ans.push_back('0');
+				char ch = '0'+num;
+				ans.push_back(ch);
+			}else{
+				ans+=to_string(num);
+			}
+			break;
+		}
+	}
+	ans.push_back('-');
+	int j = 0;
+	while(s[j]>='0'&&s[j]<='9'){
+		
+		j++;
+	}
+	if(j==1){
+		ans.push_back('0');
+		ans.push_back(s[0]);
+	}else{
+		ans.push_back(s[0]);
+		ans.push_back(s[1]);
+	}
+	return ans;
+}
